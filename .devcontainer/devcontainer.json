@@ -1,12 +1,23 @@
 {
-	"name": "PROJECT_NAME-dev",
+	"name": "numeric-calculation-handson-dev",
 	"dockerComposeFile": "./compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces",
 	"shutdownAction": "stopCompose",
 	"customizations": {
 		"vscode": {
-			"extensions": ["anthropic.claude-code", "growthjack.claude-code-usage"]
+			"extensions": [
+				"julialang.language-julia",
+				"bierner.markdown-mermaid",
+				"davidanson.vscode-markdownlint",
+				"3w36zj6.textlint",
+				"anthropic.claude-code",
+				"growthjack.claude-code-usage"
+			],
+			"settings": {
+				"julia.executablePath": "/mise/shims/julia",
+				"textlint.configPath": ".textlintrc.yml"
+			}
 		}
 	},
 	"postCreateCommand": "mise run setup",

@@ -23,6 +23,11 @@ rules:
     ja-no-mixed-period:
       periodMark: '．'
 
+    # 数式の変数(x，n，kなど)を本文に書くので，1文字の英字を許す．
+    ja-unnatural-alphabet:
+      allow:
+        - '/[a-zA-Z]/'
+
   # 和文の中のコロンを全角にし，読点と句点を「，」と「．」にする．辞書は.textlint-prh.ymlに書く．
   prh:
     rulePaths:

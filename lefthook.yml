@@ -14,3 +14,10 @@ pre-commit:
     markdownlint:
       glob: "*.md"
       run: pnpm markdownlint-cli2 {staged_files}
+
+    design:
+      glob:
+        - "iterations/**/design/**/*.md"
+        - "iterations/**/src/*.jl"
+        - "scripts/check_design.jl"
+      run: mise run design
