@@ -27,7 +27,7 @@ julia> H = [1 / (i + j - 1) for i in 1:10, j in 1:10]; b = H * ones(10);
 julia> x = solve(lu_factorize(H), b);
 
 julia> backward_error(H, x, b)   # 後退誤差は単位丸め程度
-7.578404543311813e-17
+4.7801527578771173e-17
 
 julia> t = range(0, 1; length = 50); V = [ti^j for ti in t, j in 0:9]; y = V * ones(10);
 
@@ -265,7 +265,7 @@ julia> variance(fill(1e8 + 0.1, 3)), textbook_variance(fill(1e8 + 0.1, 3))
 - LU分解を使って連立1次方程式Ax = bを解く．
 - 計算した解の(ノルムによる)後退誤差を求める．
 - 分解の増大因子を求める．
-- ピボットが0になったら`SingularException`を投げる．
+- ピボットが0になったら`SingularException`を投げる．正方行列でなければ`DimensionMismatch`を投げる．
 
 ### 使用例
 
@@ -276,30 +276,30 @@ julia> solve(lu_factorize(A; pivot = false), b), solve(lu_factorize(A), b)
 ([0.0, 1.0], [1.0, 1.0])
 
 julia> backward_error(A, [0.0, 1.0], b), backward_error(A, [1.0, 1.0], b)
-(0.25, 0.0)
+(0.25, 2.5e-21)
 ```
 
 ### モジュール
 
 - `LinearSolve`(新規)
-  - `struct LUFactorization{T<:AbstractFloat}`：`LU::Matrix{T}`(Lの狭義下三角とUを1つの行列に格納)と`perm::Vector{Int}`を持つ．
+  - `struct LUFactorization{T<:AbstractFloat}`：`LU::Matrix{T}`(Lの狭義下三角とUを1つの行列に格納)と`perm::Vector{Int}`(PAのi行目がAの`perm[i]`行目)を持つ．
   - `lu_factorize(A::AbstractMatrix{T}; pivot::Bool = true) where {T<:AbstractFloat}`
   - `solve(F::LUFactorization{T}, b::AbstractVector{T}) where {T<:AbstractFloat}`
-  - `backward_error(A, x, b)`：‖b − Ax‖∞/(‖A‖∞‖x‖∞ + ‖b‖∞)を返す．
-  - `growth_factor(F::LUFactorization, A::AbstractMatrix)`：maxᵢⱼ|uᵢⱼ|/maxᵢⱼ|aᵢⱼ|を返す．
+  - `backward_error(A::AbstractMatrix{T}, x::AbstractVector{T}, b::AbstractVector{T}) where {T<:AbstractFloat}`：‖b − Ax‖∞/(‖A‖∞‖x‖∞ + ‖b‖∞)を返す．
+  - `growth_factor(F::LUFactorization{T}, A::AbstractMatrix{T}) where {T<:AbstractFloat}`：maxᵢⱼ|uᵢⱼ|/maxᵢⱼ|aᵢⱼ|を返す．
 - 標準ライブラリ`LinearAlgebra`をパッケージの依存に加える．
 
 ### 設計文書の更新
 
 - `design/modules.md`：`LinearSolve`を加える．外部の`LinearAlgebra`への依存は図の外の説明に書く．
-- `design/error-spec.md`：`lu_factorize`/`solve`の行を後退誤差で書く(γ₃ₙ·増大因子)．前進誤差は「κ(A) × 後退誤差」で抑える．
+- `design/error-spec.md`：`lu_factorize`/`solve`の行を後退誤差で書く(γ₃ₙ‖|L̂||Û|‖∞/‖A‖∞，増大因子ρを使うとγ₃ₙn²ρ以下)．前進誤差は「κ(A) × 後退誤差」で抑える．
 - `design/adr/0004-partial-pivoting.md`：部分ピボット選択を既定にした理由と，受け入れ基準を後退誤差にした理由を書く．
 
 ### 学ぶこと
 
 - 数値計算の理論：ベクトルと行列のノルム，行列の条件数κ(A)，ノルムによる後退誤差(Rigal–Gaches)，ガウスの消去法の後退誤差解析(Wilkinson)，増大因子，部分ピボット選択の後退安定性，前進誤差の上界κη/(1 − κη)，ヒルベルト行列．
 - 品質保証：厳密解を知らなくても残差で後退誤差を検査できること，条件の悪い問題で前進誤差に固定の許容誤差を使うと不合格になる理由，特異値を指定したテスト行列の作り方，分解の再構成(PA ≈ LU)の検査．
-- Julia：`struct`とパラメータ型，キーワード引数，行列の添字とスライス，`@views`，破壊的な関数の`!`の命名規約，`LinearAlgebra`の`norm`・`opnorm`・`cond`，例外．
+- Julia：`struct`とパラメータ型，キーワード引数，行列の添字とスライス，コピーと破壊的な関数の`!`の命名規約，`LinearAlgebra`の`norm`・`opnorm`・`cond`・`qr`，`SingularException`と`DimensionMismatch`．
 
 ### 既存のテストへの影響
 

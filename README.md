@@ -65,7 +65,7 @@ mise run check
 | [0](iterations/iteration-0/exercise/README.md) | 総和(素朴・補償付き) | 厳密な参照解，誤差界から導く許容誤差 |
 | [1](iterations/iteration-1/exercise/README.md) | 二次方程式の実根 | 後退誤差，高精度の参照解，特殊値 |
 | [2](iterations/iteration-2/exercise/README.md) | 平均と分散 | 性質ベーステスト，メタモルフィックテスト |
-| 3 | LU分解による連立1次方程式 | 残差による後退誤差の検査 |
+| [3](iterations/iteration-3/exercise/README.md) | LU分解による連立1次方程式 | 残差による後退誤差の検査 |
 | 4 | QR分解による最小二乗法 | 製造解，リファクタリングの安全網 |
 | 5 | 指数関数 | ULP誤差，差分テスト，局所的な全数検査 |
 
