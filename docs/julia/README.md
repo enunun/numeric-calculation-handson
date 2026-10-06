@@ -9,3 +9,4 @@
 | 2 | [乱数，ブロードキャスト，テスト専用の依存](iteration-2.md) | `Random`と`Xoshiro`，`rand`・`randn`・`shuffle`，ブロードキャスト，`enumerate`，ジェネレータ式，`@testset`のfor形式，`[extras]`と`[targets]` |
 | 3 | [構造体，行列，LinearAlgebra](iteration-3.md) | `struct`とパラメータ型，キーワード引数，行列の添字，コピーと`!`の命名規約，`LinearAlgebra`の関数，パッケージの依存の追加，`argmax` |
 | 4 | [転置，外積，部分行列の更新](iteration-4.md) | `transpose`と`'`，外積，`.-=`による部分行列の更新，`Matrix{T}(I, m, n)`，特定のテストファイルの実行 |
+| 5 | [浮動小数点数の操作](iteration-5.md) | `ldexp`・`exponent`・`significand`，`round(Int, x)`，`evalpoly`，`nextfloat`による列挙，`bitstring`と`reinterpret`，テストのグループを分ける |

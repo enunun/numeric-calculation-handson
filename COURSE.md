@@ -75,10 +75,11 @@ iterations/iteration-N/
 Project.toml                    パッケージ名，UUID，依存，テスト専用の依存
 src/StableNumerics.jl           各モジュールをincludeして公開する
 src/<モジュール名>.jl            1ファイルに1モジュール(module ... end)
-test/runtests.jl                テストの入口．引数でunit/integrationのグループを選べる
+test/runtests.jl                テストの入口．引数でテストのグループ(unit/integration，Iteration 5からexhaustive)を選べる
 test/helpers.jl                 テストで使う参照解とテストデータ
 test/unit/<モジュール名をsnake_caseにしたもの>_tests.jl
 test/integration/<筋書きの名前>_tests.jl
+test/exhaustive/<モジュール名>_exhaustive_tests.jl  時間のかかる局所的な全数検査(Iteration 5から)
 design/                         設計文書
 docs/iteration-N.md             演習：手順／模範解答：解説
 README.md                       このIterationで作るもの，進め方，構成

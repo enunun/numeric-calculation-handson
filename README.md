@@ -67,7 +67,7 @@ mise run check
 | [2](iterations/iteration-2/exercise/README.md) | 平均と分散 | 性質ベーステスト，メタモルフィックテスト |
 | [3](iterations/iteration-3/exercise/README.md) | LU分解による連立1次方程式 | 残差による後退誤差の検査 |
 | [4](iterations/iteration-4/exercise/README.md) | QR分解による最小二乗法 | 製造解，リファクタリングの安全網 |
-| 5 | 指数関数 | ULP誤差，差分テスト，局所的な全数検査 |
+| [5](iterations/iteration-5/exercise/README.md) | 指数関数 | ULP誤差，差分テスト，局所的な全数検査 |
 
 各Iterationの要件と学ぶことは，[ロードマップ](docs/ROADMAP.md)にある．
 
