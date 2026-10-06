@@ -178,8 +178,8 @@ julia> two_prod(0.1, 0.1)
 - `Quadratic`(新規)
   - `discriminant(a::T, b::T, c::T) where {T<:AbstractFloat}`
   - `quadratic_roots(a::T, b::T, c::T) where {T<:AbstractFloat}`：`Union{Nothing, Tuple{T, T}}`を返す．
-  - `root_backward_error(a, b, c, r)`：|p(r)|/(|a|r² + |b||r| + |c|)を返す．
-  - `root_condition_number(a, b, c, r)`：(|a|r² + |b||r| + |c|)/|r·p′(r)|を返す．
+  - `root_backward_error(a::T, b::T, c::T, r::T) where {T<:AbstractFloat}`：|p(r)|/(|a|r² + |b||r| + |c|)を返す．
+  - `root_condition_number(a::T, b::T, c::T, r::T) where {T<:AbstractFloat}`：(|a|r² + |b||r| + |c|)/|r·p′(r)|を返す．
 - `ErrorBounds`：`relative_error(computed::AbstractFloat, exact::BigFloat)`のメソッドを加える．
 
 ### リファクタリング
@@ -196,7 +196,7 @@ julia> two_prod(0.1, 0.1)
 
 - 数値計算の理論：桁落ち(有害な打ち消し)と無害な打ち消し，根の公式の安定な書き換え，判別式の計算誤差，前進誤差と後退誤差，後退安定性，根の条件数(重根は条件が悪い)，「前進誤差 ≲ 条件数 × 後退誤差」，fmaと積の無誤差変換．
 - 品質保証：高精度の参照解に必要な精度の見積もり，特殊値(`Inf`，`NaN`，±0)と境界の検査，解と係数の関係による性質の検査，条件の悪い問題で前進誤差を直接検査しない理由．
-- Julia：`fma`・`copysign`・`sqrt`，`nothing`と`Union`，`BigFloat`と`setprecision`，多重ディスパッチ(同じ関数に引数の型の違うメソッドを加える)，`isfinite`，`minmax`．
+- Julia：`fma`・`copysign`・`sqrt`，`nothing`と`Union`，`BigFloat`と`setprecision`，doブロック，関数のドット呼び出し．多重ディスパッチ(同じ関数に引数の型の違うメソッドを加える)，`isfinite`，`minmax`．
 
 ### 既存のテストへの影響
 
