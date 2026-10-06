@@ -8,3 +8,4 @@
 | 1 | [fma，nothing，BigFloat，多重ディスパッチ](iteration-1.md) | `fma`・`copysign`・`isfinite`・`minmax`，`nothing`と`Union`，`BigFloat`と`setprecision`，doブロック，ドット呼び出し，多重ディスパッチ，テストのグループの選択 |
 | 2 | [乱数，ブロードキャスト，テスト専用の依存](iteration-2.md) | `Random`と`Xoshiro`，`rand`・`randn`・`shuffle`，ブロードキャスト，`enumerate`，ジェネレータ式，`@testset`のfor形式，`[extras]`と`[targets]` |
 | 3 | [構造体，行列，LinearAlgebra](iteration-3.md) | `struct`とパラメータ型，キーワード引数，行列の添字，コピーと`!`の命名規約，`LinearAlgebra`の関数，パッケージの依存の追加，`argmax` |
+| 4 | [転置，外積，部分行列の更新](iteration-4.md) | `transpose`と`'`，外積，`.-=`による部分行列の更新，`Matrix{T}(I, m, n)`，特定のテストファイルの実行 |

@@ -32,7 +32,7 @@ julia> backward_error(H, x, b)   # 後退誤差は単位丸め程度
 julia> t = range(0, 1; length = 50); V = [ti^j for ti in t, j in 0:9]; y = V * ones(10);
 
 julia> maximum(abs, lstsq_qr(V, y) .- 1), maximum(abs, lstsq_normal(V, y) .- 1)
-(2.912133867383204e-10, 3.0555489688333104e-5)
+(2.912069474447776e-10, 3.0555489688333104e-5)
 
 julia> exponential(1.0)
 2.718281828459045
@@ -317,7 +317,7 @@ julia> backward_error(A, [0.0, 1.0], b), backward_error(A, [1.0, 1.0], b)
 - ハウスホルダー変換によるQR分解で解く．
 - 比較のため，正規方程式AᵀAx = Aᵀbでも解ける．
 - 多項式の当てはめ(多項式の係数を最小二乗で求める)ができる．
-- 行数が列数より少なければ`ArgumentError`を投げる．
+- 行数が列数より少なければ`ArgumentError`を投げる．列フルランクでなければ`SingularException`を投げる．
 
 ### 使用例
 
@@ -325,26 +325,27 @@ julia> backward_error(A, [0.0, 1.0], b), backward_error(A, [1.0, 1.0], b)
 julia> t = range(0, 1; length = 50); V = [ti^j for ti in t, j in 0:9]; y = V * ones(10);
 
 julia> maximum(abs, lstsq_qr(V, y) .- 1), maximum(abs, lstsq_normal(V, y) .- 1)
-(2.912133867383204e-10, 3.0555489688333104e-5)
+(2.912069474447776e-10, 3.0555489688333104e-5)
 
 julia> polyfit([0.0, 1.0, 2.0, 3.0], [1.0, 3.0, 5.0, 7.0], 1)
 2-element Vector{Float64}:
- 1.0000000000000002
+ 1.0000000000000004
  1.9999999999999996
 ```
 
 ### モジュール
 
 - `Triangular`(新規)：`LinearSolve.solve`の前進代入と後退代入を取り出す．
-  - `forward_substitution(L::AbstractMatrix{T}, b::AbstractVector{T}; unit_diagonal::Bool = false) where {T<:AbstractFloat}`
-  - `back_substitution(U::AbstractMatrix{T}, b::AbstractVector{T}) where {T<:AbstractFloat}`
+  - `forward_substitution(L::AbstractMatrix{T}, b::AbstractVector{T}; unit_diagonal::Bool = false) where {T<:AbstractFloat}`：対角より上の要素は読まない．
+  - `back_substitution(U::AbstractMatrix{T}, b::AbstractVector{T}) where {T<:AbstractFloat}`：対角より下の要素は読まない．
 - `LinearSolve`：`solve`が`Triangular`を使う．
 - `LeastSquares`(新規)
-  - `struct QRFactorization{T<:AbstractFloat}`：ハウスホルダーベクトルとRを持つ．
+  - `struct QRFactorization{T<:AbstractFloat}`：ハウスホルダーベクトルを並べた行列`V`(m × n)とR(n × n)を持つ．
   - `householder_qr(A::AbstractMatrix{T}) where {T<:AbstractFloat}`
-  - `lstsq_qr(A, b)`
-  - `lstsq_normal(A, b)`：`LinearSolve`のLU分解で正規方程式を解く．
-  - `polyfit(t, y, degree::Integer)`
+  - `q_factor(F::QRFactorization{T}) where {T<:AbstractFloat}`：Qの最初のn列を返す．
+  - `lstsq_qr(A::AbstractMatrix{T}, b::AbstractVector{T}) where {T<:AbstractFloat}`
+  - `lstsq_normal(A::AbstractMatrix{T}, b::AbstractVector{T}) where {T<:AbstractFloat}`：`LinearSolve`のLU分解で正規方程式を解く．
+  - `polyfit(t::AbstractVector{T}, y::AbstractVector{T}, degree::Integer) where {T<:AbstractFloat}`
 
 ### リファクタリング
 
@@ -353,14 +354,14 @@ julia> polyfit([0.0, 1.0, 2.0, 3.0], [1.0, 3.0, 5.0, 7.0], 1)
 ### 設計文書の更新
 
 - `design/modules.md`：`Triangular`と`LeastSquares`を加え，`LinearSolve → Triangular`，`LeastSquares → Triangular`，`LeastSquares → LinearSolve`の依存を描く．
-- `design/error-spec.md`：`lstsq_qr`と`lstsq_normal`の行を加え，前進誤差の上界がそれぞれκ₂と κ₂²に比例することを書く．
+- `design/error-spec.md`：`lstsq_qr`と`lstsq_normal`の行を加え，前進誤差の上界がそれぞれκ₂(残差の小さい問題)とκ₂²に比例することを書く．
 - `design/adr/0005-householder-qr.md`：最小二乗法にハウスホルダーQR分解を選んだ理由を書く．
 
 ### 学ぶこと
 
 - 数値計算の理論：2ノルムと特異値，κ₂(A)，正規方程式で条件数が2乗になる理由，直交変換が誤差を増やさない理由，ハウスホルダー変換，最小二乗問題の感度(残差の大きさの影響)．
 - 品質保証：製造解の方法(先に決めた解`x`と，値域に直交する残差`r`から，問題`b = A*x + r`を作る)，最適性条件Aᵀr ≈ 0の検査，直交性‖QᵀQ − I‖の検査，リファクタリングの前後で同じテストが通ることによる保証．
-- Julia：転置(`transpose`，`'`)，外積，`size`，部分行列の更新，構造体を返す関数．
+- Julia：転置(`transpose`，`'`)，外積，`size`，部分行列の更新(`.-=`)，`Matrix{T}(I, m, n)`，REPLでテストファイルを`include`して実行する方法．
 
 ### 既存のテストへの影響
 
