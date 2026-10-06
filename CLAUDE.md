@@ -1,6 +1,9 @@
-# PROJECT_NAME
+# numeric-calculation-handson
 
-TODO: Describe the project overview.
+A Japanese-language, test-driven hands-on course on quality assurance for numerical computation, in Julia 1.12.
+Learners grow the library `StableNumerics` over Iterations 0–7 (summation, quadratic roots, variance, LU, QR least squares, exp, fixed-step ODE solvers with order-of-convergence checks, adaptive and symplectic ODE solvers).
+`COURSE.md` is the course plan (audience, layout, conventions, pitfalls); `docs/ROADMAP.md` specifies every Iteration.
+Build or change Iterations with the `system-development-skills:build-handson` skill.
 
 # RTK (Rust Token Killer)
 
@@ -8,15 +11,19 @@ Prefix every shell command with `rtk`, including each command in an `&&` chain �
 
 ## Working conventions
 
-TODO: Describe the development conventions for this project (branching strategy, commit granularity, whether reviews are required, etc.).
-
+- Material is written in Japanese, plain style (である調), with `，` and `．` as punctuation; textlint and markdownlint enforce this.
+- Every output shown in the material (REPL results, test failures) is copied from a real run.
+- Test tolerances are derived from the error bounds written in `design/error-spec.md`, never chosen ad hoc.
 - `git commit` runs the lefthook hooks. If they fail, fix the reported issues. Do not use `--no-verify`.
 
 - Run `mise run check` after making changes.
 
 ## Code map
 
-TODO: Describe the main directory structure and the purpose of each directory.
+- `iterations/iteration-N/{exercise,solution}/`: independent Julia packages named `StableNumerics` (exercise N = solution N-1 apart from README, TESTLIST, docs).
+- `docs/`: roadmap, guides (`qa.md`, `tdd.md`, `design.md`), and per-Iteration notes (`theory/`, `julia/`).
+- `scripts/check_design.jl`: checks Mermaid syntax, dependency diagram vs `using`, and error spec vs exports.
+- `scripts/test_all.jl`: runs `Pkg.test()` for every package.
 
 # Artifact Cleanup
 
