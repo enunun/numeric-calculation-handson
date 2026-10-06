@@ -492,7 +492,7 @@ julia> f(t, y) = [y[2], -y[1]];
 julia> y, accepted, rejected = integrate_adaptive(f, 0.0, [1.0, 0.0], 2π; rtol = 1e-8, atol = 1e-8);
 
 julia> maximum(abs, y - [1.0, 0.0]), accepted, rejected   # 大域誤差は許容誤差より大きい
-(1.8317103478437957e-7, 712, 2)
+(1.8317103522846878e-7, 712, 2)
 
 julia> force(q) = -q;   # 調和振動子
 

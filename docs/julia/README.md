@@ -11,3 +11,4 @@
 | 4 | [転置，外積，部分行列の更新](iteration-4.md) | `transpose`と`'`，外積，`.-=`による部分行列の更新，`Matrix{T}(I, m, n)`，特定のテストファイルの実行 |
 | 5 | [浮動小数点数の操作](iteration-5.md) | `ldexp`・`exponent`・`significand`，`round(Int, x)`，`evalpoly`，`nextfloat`による列挙，`bitstring`と`reinterpret`，テストのグループを分ける |
 | 6 | [関数を渡す関数と型に依存しない関数](iteration-6.md) | 高階関数，匿名関数，型注釈のない関数と`BigFloat`，定数の型，`2^p`と`log2` |
+| 7 | [必須のキーワード引数，名前付きタプル，有理数の型](iteration-7.md) | 既定値のないキーワード引数，名前付きタプル，`Rational{BigInt}`，`clamp`・`cbrt`・`isfinite`，要素ごとの最大値 |

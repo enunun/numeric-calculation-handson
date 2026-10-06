@@ -79,7 +79,7 @@ test/runtests.jl                テストの入口．引数でテストのグル
 test/helpers.jl                 テストで使う参照解とテストデータ
 test/unit/<モジュール名をsnake_caseにしたもの>_tests.jl
 test/integration/<筋書きの名前>_tests.jl
-test/exhaustive/<モジュール名>_exhaustive_tests.jl  時間のかかる局所的な全数検査(Iteration 5から)
+test/exhaustive/<モジュール名>_exhaustive_tests.jl  時間のかかる検査(局所的な全数検査はIteration 5から，長時間の検査はIteration 7から)
 design/                         設計文書
 docs/iteration-N.md             演習：手順／模範解答：解説
 README.md                       このIterationで作るもの，進め方，構成
