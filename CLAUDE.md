@@ -1,7 +1,7 @@
 # numeric-calculation-handson
 
 A Japanese-language, test-driven hands-on course on quality assurance for numerical computation, in Julia 1.12.
-Learners grow the library `StableNumerics` over Iterations 0–5 (summation, quadratic roots, variance, LU, QR least squares, exp).
+Learners grow the library `StableNumerics` over Iterations 0–7 (summation, quadratic roots, variance, LU, QR least squares, exp, fixed-step ODE solvers with order-of-convergence checks, adaptive and symplectic ODE solvers).
 `COURSE.md` is the course plan (audience, layout, conventions, pitfalls); `docs/ROADMAP.md` specifies every Iteration.
 Build or change Iterations with the `system-development-skills:build-handson` skill.
 

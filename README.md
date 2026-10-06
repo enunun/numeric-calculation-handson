@@ -46,7 +46,7 @@ mise run check
 
 ## 進め方
 
-ハンズオンは6つのIteration(0〜5)からなる．
+ハンズオンは7つのIteration(0〜6)からなる．
 どのIterationも，`iterations/iteration-N/exercise/`の`README.md`と`docs/iteration-N.md`の手順に従って進める．
 
 1. 要件を読み，テストリスト(`TESTLIST.md`)を書く．
@@ -68,6 +68,7 @@ mise run check
 | [3](iterations/iteration-3/exercise/README.md) | LU分解による連立1次方程式 | 残差による後退誤差の検査 |
 | [4](iterations/iteration-4/exercise/README.md) | QR分解による最小二乗法 | 製造解，リファクタリングの安全網 |
 | [5](iterations/iteration-5/exercise/README.md) | 指数関数 | ULP誤差，差分テスト，局所的な全数検査 |
+| [6](iterations/iteration-6/exercise/README.md) | 常微分方程式(Euler法，RK4) | 収束次数の検査，製造解，同じ算法の高精度実行 |
 
 各Iterationの要件と学ぶことは，[ロードマップ](docs/ROADMAP.md)にある．
 

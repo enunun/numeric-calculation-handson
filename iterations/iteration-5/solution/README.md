@@ -1,7 +1,7 @@
 # Iteration 5の模範解答：指数関数とULP精度
 
 Iteration 5の演習を完成させたパッケージと，各手順の解説である．
-コースの最後のIterationで，`StableNumerics`はこれで完成する．
+Iteration 6からは，常微分方程式の数値解法を加える．
 
 - `ElementaryFunctions`(新規)：Cody–Waiteの引数還元と13次のテイラー多項式による指数関数．誤差予算による上界は，正規化数の結果で1.3 ULP，非正規化数の結果で1.8 ULPである．
 - `ErrorBounds`：ULP誤差を測る`ulp_error`を加えた．
