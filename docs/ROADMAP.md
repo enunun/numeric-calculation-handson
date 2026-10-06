@@ -215,7 +215,7 @@ julia> two_prod(0.1, 0.1)
 - データを1回走査するだけで分散を求める(Welfordの算法)．
 - 比較のため，教科書の公式(Σxᵢ² − (Σxᵢ)²/n)/(n − 1)による分散も計算できる．
 - 分散の条件数を求められる．
-- 要素数が2未満なら`ArgumentError`を投げる．
+- 分散では，要素数が2未満なら`ArgumentError`を投げる．平均では，空のデータで`ArgumentError`を投げる．
 
 ### 使用例
 
@@ -235,7 +235,7 @@ julia> variance(fill(1e8 + 0.1, 3)), textbook_variance(fill(1e8 + 0.1, 3))
   - `mean(xs::AbstractVector{T}) where {T<:AbstractFloat}`：`compensated_sum`で和を求める．
   - `variance(xs::AbstractVector{T}) where {T<:AbstractFloat}`：Welfordの算法．
   - `textbook_variance(xs::AbstractVector{T}) where {T<:AbstractFloat}`
-  - `variance_condition_number(xs::AbstractVector{T}) where {T<:AbstractFloat}`：‖x‖₂/√S(Sは偏差平方和)を返す．
+  - `variance_condition_number(xs::AbstractVector{T}) where {T<:AbstractFloat}`：‖x‖₂/√S(Sは偏差平方和)を返す．S = 0なら`Inf`を返す．
 
 ### 設計文書の更新
 
@@ -247,7 +247,7 @@ julia> variance(fill(1e8 + 0.1, 3)), textbook_variance(fill(1e8 + 0.1, 3))
 
 - 数値計算の理論：分散の条件数，教科書の公式がκ²で誤差を増やす理由，Welfordの更新式の導出，2の冪による拡大縮小が誤差なく行えること．
 - 品質保証：性質ベーステスト(性質を部分的な参照解として使う)，メタモルフィックテスト(平行移動・拡大縮小・並べ替え)，厳密に成り立つ性質と許容誤差つきで成り立つ性質の区別，条件数を制御したテストデータの生成，乱数シードの固定と失敗時の再現．
-- Julia：`Random`と`Xoshiro`，`rand`・`randn`，ブロードキャスト(`.+`)，`enumerate`，`@testset`の`for`形式．
+- Julia：`Random`と`Xoshiro`，`rand`・`randn`・`shuffle`，ブロードキャスト(`.+`)，`enumerate`，ジェネレータ式，`@testset`の`for`形式．
 
 ### 既存のテストへの影響
 

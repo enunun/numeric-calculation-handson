@@ -267,7 +267,8 @@ end
 g = gamma(length(xs) - 1, Float64)
 κ = exact_condition_number(xs)
 β = u + g^2 * κ
-tolerance = (1 + g) * (1 + u) / (1 - β) - 1 + u
+# (1 + g)(1 + u)/(1 - β) - 1 + uを，1との足し算で丸めが起きない形に変形して計算する．
+tolerance = (g + u + g * u + β) / (1 - β) + u
 @test sum_condition_number(xs) ≈ κ rtol = tolerance
 ```
 
